@@ -14,10 +14,12 @@ return new class extends Migration
      */
     public function up()
     {
+        $email = env('ADMIN_EMAIL','admin@laravel.com.br');
+        $password = bcrypt(env('ADMIN_PASSWORD', 'admin'));
        DB::table('users')->insert([
            'name' => 'Administrador',
-           'email' => '',
-           'password' => ''
+           'email' => $email,
+           'password' => $password
        ]);
     }
 
@@ -28,6 +30,7 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        $email = env('ADMIN_EMAIL','admin@laravel.com.br');
+        DB::delete('DELETE FROM users WHERE email = ?', [$email]);
     }
 };
